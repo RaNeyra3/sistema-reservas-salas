@@ -8,6 +8,7 @@ from app.db.session import Base, get_db
 from app.main import app
 
 TEST_DATABASE_URL = "sqlite+pysqlite:///:memory:"
+
 engine_test = create_engine(
     TEST_DATABASE_URL,
     connect_args={"check_same_thread": False},
@@ -26,7 +27,7 @@ def override_get_db():
 
 app.dependency_overrides[get_db] = override_get_db
 
-# Crea y borra tablas en cada test para evitar duplicados
+# ✅ Crea y borra tablas EN CADA TEST
 @pytest.fixture(autouse=True)
 def preparar_bd():
     import app.models  # registra modelos
